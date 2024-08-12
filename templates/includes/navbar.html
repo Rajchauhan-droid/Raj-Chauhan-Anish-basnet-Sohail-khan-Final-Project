@@ -1,0 +1,174 @@
+{% load static %}
+
+<style>
+
+
+  #menu-btn, #close-btn{
+    font-size: 30px;
+    margin: 10px;
+    color: grey;
+    display:none;
+
+  }
+
+  @media only screen and (max-width:980px){
+    #menu-btn{
+      display:block;
+    }
+  
+  }
+
+  .dropdown-menu li {
+    position: relative;
+    }
+    .dropdown-menu .dropdown-submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -7px;
+    }
+    .dropdown-menu .dropdown-submenu-left {
+    right: 100%;
+    left: auto;
+    }
+    .dropdown-menu > li:hover > .dropdown-submenu {
+    display: block;
+    }
+
+    .mene{
+      background: #ffffff;
+      position: fixed;
+      top: 0;
+      color: rgb(229, 15, 15);
+
+      width: 100%;
+      z-index: 1000;
+      overflow: hidden;
+      margin-top:5rem;
+      margin-bottom:5rem;
+
+    }
+
+    .navbar{
+      background:#ffffff;
+      color:#ffffff;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      overflow: hidden;
+    }
+</style>
+<header class="section-header">
+    <nav class=" navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTop4">
+        <ul class="navbar-nav mr-auto">
+
+        </ul>
+        <ul class="navbar-nav">
+            <li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Zoommandu2343@gmail.com.np </a></li>
+            <li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us on +977 9823345761 </a></li>
+        </ul> <!-- list-inline //  -->
+      </div> <!-- navbar-collapse .// -->
+    </div> <!-- container //  -->
+    </nav>
+    
+    <section class="mene header-main border-bottom">
+
+        <div class="container">
+
+    <div class="row align-items-center">
+
+
+    <i class="fa fa-bars" id= "menu-btn" onclick="openmenu()"></i>
+    <i class="fa fa-times" id = "close-btn" onclick="closemenu()"></i>
+
+
+        <div class="col-lg-2 col-md-3 col-6">
+            <a href="{% url 'home' %}" class="brand-wrap" style="  font-family: Luckiest Guy, cursive;
+            text-decoration: none; font-weight: bold; color: rgb(0, 0, 0);font-size: 25px;
+            ">
+              Zoom <strong style="color: orange;">Mandu</strong> 
+                <!-- <img class="logo" src="{% static '.images/zoom.png' %}"> -->
+            </a> <!-- brand-wrap.// -->
+        </div>
+
+        
+
+        <a href="{% url 'store' %}" class="btn btn-warning" style="margin-left:30px !important;">Store</a>
+        <div class="col-lg  col-md-6 col-sm-12 col">
+
+            <form action="{% url 'search' %}" class="search" method='GET'>
+                <div class="input-group w-100">
+                    <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword" required>
+                    
+                    <div class="input-group-append" style="color: orange;">
+                      <button class="btn btn-primary" type="submit" style="background-color: orange;">
+                        <i class="fa fa-search" style="color: rgb(0, 0, 0);"></i>
+                      </button>
+                    </div>
+                </div>
+            </form> <!-- search-wrap .end// -->
+
+
+        </div> <!-- col.// -->
+        <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+                    <div class="d-flex justify-content-end mb-3 mb-lg-0">
+                        {% if user.id is None %}
+                        <div class="widget-header">
+                          <small class="title text-muted">Welcome guest!</small>
+                          <div>
+                            <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
+                            <a href="{% url 'register' %}"> Register</a>
+                          </div>
+                        </div>
+                        {% else %}
+                        <div class="widget-header">
+                          <small class="title text-muted" style="text-decoration: none; color: rgb(228, 242, 255); font-weight: bold;">Welcome {{user.first_name}}!</small>
+                          <div>
+                            <a href="{% url 'dashboard' %}" style="text-decoration: none; color: rgb(0, 0, 0); font-weight: bold;">Dashboard</a> <span class="dark-transp"> | </span>
+                            <a href="{% url 'logout' %}" style="text-decoration: none; color: rgb(0, 0, 0); font-weight: bold;" > Logout</a>
+                          </div>
+                        </div>
+                        {% endif %}
+
+
+        <a href="{% url 'wishlist' %}" class="widget-header pl-3 ml-3">
+                            <div class="icon icon-sm rounded-circle border"><i class="fa fa-heart"></i></div>
+                            <span class="badge badge-pill badge-danger notify">{{wishlist_count}}</span>
+                        </a>
+
+
+                        <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
+                            <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+                            <span class="badge badge-pill badge-danger notify">{{cart_count}}</span>
+                        </a>
+                        
+                    </div> <!-- widgets-wrap.// -->
+                </div> <!-- col.// -->
+    </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+    
+    
+    
+    
+    </header> <!-- section-header.// -->
+
+    <script>
+      function openmenu(){
+        document.getElementById("side-menu").style.display="block";
+        document.getElementById("menu-btn").style.display="none";
+        document.getElementById("close-btn").style.display="block";
+      }
+
+      function closemenu(){
+        document.getElementById("side-menu").style.display="none";
+        document.getElementById("menu-btn").style.display="block";
+        document.getElementById("close-btn").style.display="none";
+      }
+    </script>
